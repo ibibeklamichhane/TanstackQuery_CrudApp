@@ -1,14 +1,16 @@
 const fetchPosts = async (page) => {
-    const response = await fetch(
-      `http://localhost:3000/posts`
-    );
+  const response = await fetch(
+    `http://localhost:3000/posts?${
+      page ? `_page=${page}&_per_page=5` : ""
+    }`
+  );
   
-   /* if (!response.ok) {
+    if (!response.ok) {
    
         
       throw new Error(`Failed to fetch posts. Status: ${response.status}`);
     }
-  */
+ 
  console.log(response)
     const postData = await response.json();
     return postData;
