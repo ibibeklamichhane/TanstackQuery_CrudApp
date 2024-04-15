@@ -9,16 +9,18 @@ function PostList() {
 
 const{data:postData,isLoading,isError,error} = useQuery({
     
-    querykey :["posts",page],//provides a unique key to each and every query so yhan we can identify it uniquely
+  queryKey: ["posts", page],//provides a unique key to each and every query so yhan we can identify it uniquely
     queryFn: () =>  fetchPosts(page), // data function that returns a promise 
   });
 
   const queryClient = useQueryClient()
   const {mutate,  
     isError:isPostError,
-    isPending,error:postError ,
-    reset, 
-  } = useMutation({
+    isPending,
+    error:postError ,
+    reset,
+
+   } = useMutation({
     mutationFn:addPost,
     
     
@@ -103,19 +105,21 @@ e.target.reset()
 
         <div className="pages">
         <button
-          onClick={() => setPage((old) => Math.max(old - 1, 0))}
-          disabled={!postData?.prev}
+          onClick={() => setPage((old) => Math.max(old - 1, 1))}
+          disabled={page === 1}
         >
           Previous Page
         </button>
 
         <span>{page}</span>
 
-        <button onClick={() => setPage(oldPage => oldPage+1)}
-        disabled = {!postData?.next}
-        >Next Page</button>
-        </div>
-
+        <button
+          onClick={() => setPage((old) => old + 1)}
+          disabled={!postData?.next}
+        >
+  Next Page
+</button>
+</div>
 
         {postData?.data?.map((post)=> {
             return (
@@ -127,6 +131,7 @@ e.target.reset()
             )
         })}
     </div>
+    
   )
 }
 
